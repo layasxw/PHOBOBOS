@@ -13,15 +13,15 @@ public class Mecanum extends OpMode {
 
     @Override
     public void init() {
-        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
-        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
-        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-        backRight= hardwareMap.get(DcMotor.class, "backRight");
+        frontLeft = hardwareMap.get(DcMotor.class, "fl");
+        backLeft = hardwareMap.get(DcMotor.class, "bl");
+        frontRight = hardwareMap.get(DcMotor.class, "fr");
+        backRight= hardwareMap.get(DcMotor.class, "br");
 
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
-        backRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -38,7 +38,7 @@ public class Mecanum extends OpMode {
     public void loop() {
         double y = -gamepad1.left_stick_y;
         double x = gamepad1.left_stick_x;
-        double rx = -gamepad2.right_stick_x;
+        double rx = -gamepad1.right_stick_x;
 
         double frontLeftPower = y + x + rx;
         double backLeftPower = y - x + rx;

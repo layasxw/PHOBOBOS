@@ -40,15 +40,15 @@ public class TeleOpPhobos extends OpMode {
     public void init() {
 
         // ================= DRIVE =================
-        frontLeft  = hardwareMap.get(DcMotor.class, "frontLeft");
-        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-        backLeft   = hardwareMap.get(DcMotor.class, "backLeft");
-        backRight  = hardwareMap.get(DcMotor.class, "backRight");
+        frontLeft  = hardwareMap.get(DcMotor.class, "fl");
+        frontRight = hardwareMap.get(DcMotor.class, "fr");
+        backLeft   = hardwareMap.get(DcMotor.class, "bl");
+        backRight  = hardwareMap.get(DcMotor.class, "br");
 
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        backLeft.setDirection(DcMotor.Direction.REVERSE);
-        frontRight.setDirection(DcMotor.Direction.FORWARD);
-        backRight.setDirection(DcMotor.Direction.FORWARD);
+        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -61,9 +61,11 @@ public class TeleOpPhobos extends OpMode {
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // ================= MECHANISMS =================
-        shooterLeft  = hardwareMap.get(DcMotor.class, "shooterLeft");
-        shooterRight = hardwareMap.get(DcMotor.class, "shooterRight");
+        shooterLeft  = hardwareMap.get(DcMotor.class, "shooterL");
+        shooterRight = hardwareMap.get(DcMotor.class, "shooterR");
 
+
+        shooterLeft.setDirection(DcMotor.Direction.REVERSE);
         shooterRight.setDirection(DcMotor.Direction.REVERSE);
         shooterLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         shooterRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -72,13 +74,14 @@ public class TeleOpPhobos extends OpMode {
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         transferMotor = hardwareMap.get(DcMotor.class, "transfer");
+
         transferMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         servoRight   = hardwareMap.get(Servo.class, "servoRight");
         servoLeft = hardwareMap.get(Servo.class, "servoLeft");
 
-        axonOne = hardwareMap.get(Servo.class, "axon1");
-        axonTwo = hardwareMap.get(Servo.class, "axon2");
+        axonOne = hardwareMap.get(Servo.class, "ax1");
+        axonTwo = hardwareMap.get(Servo.class, "ax2");
 
         // стартовая позиция шутера
         setShooterAngle(SHOOTER_DOWN);
@@ -88,7 +91,7 @@ public class TeleOpPhobos extends OpMode {
         axonTwo.setPosition(0.5);
 
         // ================= IMU =================
-        imu = hardwareMap.get(IMU.class, "imu");
+        /*imu = hardwareMap.get(IMU.class, "imu");*/
     }
 
     @Override
@@ -97,13 +100,15 @@ public class TeleOpPhobos extends OpMode {
         // ========= FIELD-CENTRIC DRIVE =========
         double y  = -gamepad1.left_stick_y;
         double x  = gamepad1.left_stick_x * 1.1;
-        double rx = gamepad1.right_stick_x;
+        double rx = -gamepad1.right_stick_x;
 
+/*
         double robotAngle = imu.getRobotYawPitchRollAngles().getYaw() * Math.PI / 180.0; // в радианы
-
+*/
+/*
         double temp = y * Math.cos(robotAngle) + x * Math.sin(robotAngle);
         x = -y * Math.sin(robotAngle) + x * Math.cos(robotAngle);
-        y = temp;
+        y = temp;*/
 
         double fl = y + x + rx;
         double bl = y - x + rx;
